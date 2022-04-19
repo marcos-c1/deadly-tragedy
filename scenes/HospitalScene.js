@@ -47,13 +47,38 @@ class Person
 				frameDimensions: {frameWidth: 48, frameHeight: 48}
 			},
 			{
-				name: `${name}-jump`,
-				path: `${rpath}/${name}/${name}_jump.png`,
+				name: `${name}-jump-right`,
+				path: `${rpath}/${name}/${name}_jump_right.png`,
+				frameDimensions: {frameWidth: 48, frameHeight: 48}
+			},
+			{
+				name: `${name}-jump-left`,
+				path: `${rpath}/${name}/${name}_jump_left.png`,
 				frameDimensions: {frameWidth: 48, frameHeight: 48}
 			},
 			{
 				name: `${name}-hurt`,
 				path: `${rpath}/${name}/${name}_hurt.png`,
+				frameDimensions: {frameWidth: 48, frameHeight: 48}
+			},
+			{
+				name: `${name}-attack1-right`,
+				path: `${rpath}/${name}/${name}_attack1_right.png`,
+				frameDimensions: {frameWidth: 48, frameHeight: 48}
+			},
+			{
+				name: `${name}-attack1-left`,
+				path: `${rpath}/${name}/${name}_attack1_left.png`,
+				frameDimensions: {frameWidth: 48, frameHeight: 48}
+			},
+			{
+				name: `${name}-special-right`,
+				path: `${rpath}/${name}/${name}_special_right.png`,
+				frameDimensions: {frameWidth: 48, frameHeight: 48}
+			},
+			{
+				name: `${name}-special-left`,
+				path: `${rpath}/${name}/${name}_special_left.png`,
 				frameDimensions: {frameWidth: 48, frameHeight: 48}
 			},
 		]
@@ -89,13 +114,13 @@ class Hospital extends Phaser.Scene
 			{frameWidth: 18, frameHeight: 16})
 	
 			this.load.audio('piano', '../assets/audio/background-sound.mp3')
+
+		this.load.image('box', '../assets/sprites/Scenario/Objects/Box5.png')
 			
 	}
 
 	create() {
 		this.add.image(config.width / 2 + 50, config.height/2, 'background')
-
-		this.platforms = this.physics.add.staticGroup()
 
 		let bsound = this.sound.add('piano', {loop: true})
 		
@@ -108,35 +133,49 @@ class Hospital extends Phaser.Scene
 		this.a = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A)
 		this.s = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S)
 		this.d = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D)
+		this.c = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C)
+		this.v = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.V)
 
-		for(let i = 0, j = 30; i < 19; i++)
+
+		let platform = this.physics.add.staticGroup();
+		let hearts = this.physics.add.staticGroup();
+
+		for(let i = 0, j = 30; i < 20; i++)
 		{
-			this.platforms.create(3+j, config.height  , 'ground').setScale(2).refreshBody();
-			j += 63
+			platform.create(3+j, config.height + 11, 'ground').setScale(2, 2).refreshBody()
+			j += 60
 		}
 		
-		let alex = this.physics.add.sprite(100, config.height - 100, 'player').setScale(3, 3);
-
-
-		this.physics.add.collider(alex, this.platforms);
-	
-		let alex_2 = this.physics.add.sprite(500, 200, 'player_2').setScale(3, 3)
-	
-		let enemy = this.physics.add.sprite(50, 300, 'SuperHuman-run-right').setScale(3, 3);
-		
+		let alex = this.physics.add.sprite(100, 450, 'Alex-run-right').setScale(3, 3);
 
 		alex.setCollideWorldBounds(true);
-		alex.setBounce(0.2);
+		
+		this.physics.add.collider(alex, platform);
+		
+		let enemy = this.physics.add.sprite(50, 300, 'SuperHuman-run-right').setScale(3, 3);
 		enemy.setCollideWorldBounds(true);
 		enemy.setBounce(0.2);
-		//enemy_left.setCollideWorldBounds(true);
-		//enemy_left.setBounce(0.2);
-	
-		let heart1 = this.physics.add.sprite(50, 20, 'hp').setScale(1, 1);
-		let heart2 = this.physics.add.sprite(70, 20, 'hp').setScale(1, 1);
-		let heart3 = this.physics.add.sprite(90, 20, 'hp').setScale(1, 1);
-		let heart4 = this.physics.add.sprite(110, 20, 'hp').setScale(1, 1);
-		let heart5 = this.physics.add.sprite(130, 20, 'hp').setScale(1, 1);
+		
+		let box = this.physics.add.image(48, 48, 'box')
+		
+		box.body.setVelocity(100, 200).setBounce(1, 1).setCollideWorldBounds(true);
+
+		this.physics.add.collider(enemy, platform);
+		
+
+		
+		let alex_2 = this.physics.add.sprite(500, 200, 'Alex-run-right').setScale(3, 3)
+
+		alex_2.setCollideWorldBounds(true);
+		alex_2.setBounce(0.2);
+		
+		this.physics.add.collider(alex_2, platform)
+
+		for(let i = 0, j = 0; i < 5; i++)
+		{
+			hearts.create(50+j, 20, 'hp').setScale(1,1).refreshBody();
+			j += 20
+		}
 		
 		this.anims.create({
 				key: 'heart-hurt',
@@ -163,8 +202,7 @@ class Hospital extends Phaser.Scene
 			repeat: 6
 		});
 
-		
-	
+
 		this.anims.create({
 			key: 'right',
 			frames: this.anims.generateFrameNames('Alex-run-right',
@@ -198,26 +236,59 @@ class Hospital extends Phaser.Scene
 		})
 
 		this.anims.create({
-			key: 'jump',
-			frames: this.anims.generateFrameNames('Alex-jump',
+			key: 'jump-right',
+			frames: this.anims.generateFrameNames('Alex-jump-right',
 			{start: 0, end: 3}),
-			frameRate: 8,
-			repeat: 0
+			frameRate: 10,
+			repeat: -1
 		})
 		
 		this.anims.create({
-			key: 'hurt',
-			frames: this.anims.generateFrameNames('Alex-hurt',
-			[0, 1]),
-			frameRate: 1,
-			repeat: 0
+			key: 'jump-left',
+			frames: this.anims.generateFrameNames('Alex-jump-left',
+			{start: 3, end: 0}),
+			frameRate: 10,
+			repeat: -1
 		})
-	
+
+		this.anims.create({
+			key: 'hurt',
+			frames: [{ key: 'Alex-hurt', frame: 1}],
+			frameRate: 10,
+		})
+
+		this.anims.create({
+			key: 'attack-right',
+			frames: [{ key: 'Alex-attack1-right', frame: 4}],
+			frameRate: 10,
+		})
+
+		this.anims.create({
+			key: 'attack-left',
+			frames: [{ key: 'Alex-attack1-left', frame: 1}],
+			frameRate: 10,
+		})
+
+		this.anims.create({
+			key: 'special-right',
+			frames: this.anims.generateFrameNames('Alex-special-right',
+			{end: 7}),
+			frameRate: 10,
+			repeat: -1
+		})
+
+		this.anims.create({
+			key: 'special-left',
+			frames: this.anims.generateFrameNames('Alex-special-left',
+			{start: 7, end: 0}),
+			frameRate: 10,
+			repeat: -1
+		})
 	
 		enemy.anims.play("run-right", true)
 		enemy.setCollideWorldBounds(true)
 
-		alex_2.anims.play("hurt", true)
+		alex_2.anims.play("hurt", false)
 		
 		this.tweens.add({
 			targets: enemy,
@@ -260,17 +331,22 @@ class Hospital extends Phaser.Scene
 		});
 
 		this.player = alex
+		this.box = box;
+		this.platform = platform
+		this.hp = hearts;
 		alex.anims.play("idle-right", true)
-		this.hp = heart1;
 	}
 
 	update() {
 		let alex = this.player;
+		let box = this.box;
+		let platform = this.platform;
 		let isLeft;
+
 		// Personagens
 		let cursors = this.input.keyboard.createCursorKeys();
-	;
-		
+
+		this.physics.world.collide(box, platform);
 	
 
 		if ((cursors.left.isDown || this.a.isDown) || (cursors.right.isDown || this.d.isDown))
@@ -290,15 +366,30 @@ class Hospital extends Phaser.Scene
 				alex.anims.play("idle-right", true)
 			}
 		} 
-
 		if(cursors.up.isDown && alex.body.touching.down)
 		{
-			alex.setVelocityY(-330)
+			alex.setVelocityY(-250)
+		}
+		if(this.c.isDown)
+		{
+			if(this.isLeft != undefined)
+			{
+				this.isLeft ? alex.anims.play("attack-left", true) : alex.anims.play("attack-right", true)
+			} else {
+				alex.anims.play("attack-right", true)
+			}
+
 		}
 		
-		/*if ((cursors.up.isDown || this.w.isDown) || (cursors.down.isDown || this.s.isDown)) 
-		this.player.setVelocityY(cursors.up.isDown || this.w.isDown ? -160 : 160);
-		else this.player.setVelocityY(0);*/
+		if(this.v.isDown)
+		{
+			if(this.isLeft != undefined)
+			{
+				this.isLeft ? alex.anims.play("special-left", true) : alex.anims.play("special-right", true)
+			} else {
+				alex.anims.play("special-right", true)
+			}
+		}
 	}
 }
 
@@ -312,7 +403,7 @@ const config = {
         default: 'arcade',
         arcade: {
             gravity: {
-                y: 0
+                y: 300
             },
             debug: true
         }
