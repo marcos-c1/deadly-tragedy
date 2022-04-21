@@ -1,9 +1,9 @@
-class SecondScene extends Phaser.Scene
+export default class Corredor extends Phaser.Scene
 {
 
     constructor()
     {
-        super()
+        super({ key: 'secondScene'})
     }
 
     preload()
