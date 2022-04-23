@@ -1,6 +1,5 @@
 import Person from './models/Person.js'
-import {defaultConfig, gWidth, gHeight} from './GameLoadingScene.js'
-import Corredor from "./OutHospitalScene.js";
+import Corredor from './OutHospitalScene.js'
 
 export default class Hospital extends Phaser.Scene {
 	constructor() {
@@ -30,6 +29,8 @@ export default class Hospital extends Phaser.Scene {
 
 		this.load.image('ground', '../assets/sprites/Scenario/Tiles/IndustrialTile_78.png')
 
+		this.load.image('mountain', '../../assets/sprites/Scenario/Background/parallax_mountain_pack/layers/parallax-mountain-bg.png')
+
 		this.load.image('background',
 			'../assets/dark-room-background.png');
 
@@ -48,7 +49,7 @@ export default class Hospital extends Phaser.Scene {
 
 		this.load.image('symbol', '../../assets/sprites/Scenario/Objects/Hospital Environment Mini Asset - Expansion Pack 1/tiles/hospital-expansion-tile- (40).png')
 
-		this.load.spritesheet('bed', '../../assets/sprites/Scenario/Objects/bed_room.png', { frameWidth: 32, frameHeight: 32.5})
+		this.load.spritesheet('bed', '../../assets/sprites/Scenario/Objects/bed_room.png', { frameWidth: 32, frameHeight: 31})
 
 		this.load.spritesheet('medicine', '../../assets/sprites/Scenario/Objects/kitchen.png', { frameWidth: 32, frameHeight: 35})
 
@@ -61,11 +62,17 @@ export default class Hospital extends Phaser.Scene {
 	}
 
 	create() {
-		this.add.image(gWidth / 2 + 50, gHeight / 2, 'background')
+		// this.add.image(gWidth / 2 + 50, gHeight / 2, 'background')
+		this.cameras.main.backgroundColor.setTo(255, 255, 200)
+
+		let pause = this.add.text(config.width - 20, config.height - 20, '',
+		{fontFamily: 'CustomFont', fontSize: '20px'})
+		
+		pause.setText('Pausado')
 		
 		let bsound = this.sound.add('piano', { loop: true })
 
-		bsound.play()
+		//bsound.play()
 		bsound.volume = 0.2
 		bsound.rate = 1
 
@@ -73,12 +80,11 @@ export default class Hospital extends Phaser.Scene {
 		let platform = this.physics.add.staticGroup();
 		let hearts = this.physics.add.staticGroup();
 		let hospitalObj = this.physics.add.staticGroup();
-		let box = this.physics.add.image(48, 48, 'box')
 		let walls = this.physics.add.staticGroup();
 
 		walls.depth = -1;
 
-		let bed = hospitalObj.create(70, gHeight - 58, 'bed').setScale(3,3).refreshBody();
+		let bed = hospitalObj.create(70, gHeight - 65, 'bed').setScale(3,3).refreshBody();
 		bed.depth = 1
 
 		let bp = hospitalObj.create(150, gHeight - 60, 'blood-pressure').setScale(3,3).refreshBody();
@@ -92,6 +98,8 @@ export default class Hospital extends Phaser.Scene {
 
 		let symbol = hospitalObj.create(300, gHeight - 200, 'symbol').setScale(3,3).refreshBody();
 		symbol.depth = 1
+
+		// let wall = hospitalObj.create(70, 150, 'wall').setScale(3,3).refreshBody();
 		
 		for(let i = 0, l = 52; i < 6; i++)
 		{
@@ -109,6 +117,9 @@ export default class Hospital extends Phaser.Scene {
 
 		let wardrobe = hospitalObj.create(gWidth/2 - 150, gHeight - 60, 'wardrobe').setScale(3,3).refreshBody();
 
+
+		let box = this.physics.add.image(48, 48, 'box')
+				
 		box.body.setVelocity(100, 200).setBounce(1, 1).setCollideWorldBounds(true);
 
 		for (let i = 0, j = 30; i < 20; i++) {
@@ -124,9 +135,7 @@ export default class Hospital extends Phaser.Scene {
 		/* Personagens */
 		let alex = this.physics.add.sprite(100, 450, 'Alex-run-right').setScale(3, 3);
 		alex.depth = 2;
-		// let enemy = this.physics.add.sprite(50, 300, 'SuperHuman-run-right').setScale(3, 3);
-		// let john = this.physics.add.sprite(300, 450, 'John-run-right').setScale(3, 3);
-		// let nex = this.physics.add.sprite(700, 450, 'Nex-run-right').setScale(3, 3);
+
 		alex.enableBody = true;
 		alex.physicsBodyType = Phaser.Physics.ARCADE;
 		
@@ -134,19 +143,28 @@ export default class Hospital extends Phaser.Scene {
 
 		alex.body.onWorldBounds = true;
 		this.physics.world.once('worldbounds', (body, up, down, left, right) => {
-			if(left || right)
+			if(left || right){
+				// TODO: Fazer a verificação da cena para resete as chaves
+			}
 				this.scene.launch("Corredor")
 		})
-		// john.setCollideWorldBounds(true);
-		// nex.setCollideWorldBounds(true);
-		// enemy.setCollideWorldBounds(true);
-		// enemy.setBounce(0.2);
+		
+		
+		let john = this.physics.add.sprite(300, 450, 'John-run-right').setScale(3, 3);
+		let nex = this.physics.add.sprite(700, 450, 'Nex-run-right').setScale(3, 3);
+		let enemy = this.physics.add.sprite(700, 300, 'SuperHuman-run-right').setScale(3, 3);
+		enemy.depth = 2;
+
+		alex.setCollideWorldBounds(true);
+		john.setCollideWorldBounds(true);
+		nex.setCollideWorldBounds(true);
+		enemy.setCollideWorldBounds(true);
+		enemy.setBounce(0.2);
 				
 		this.physics.add.collider(alex, platform);
-		// this.physics.add.collider(john, platform);
-		// this.physics.add.collider(nex, platform);
-		// this.physics.add.collider(enemy, platform);
-		
+		this.physics.add.collider(john, platform);
+		this.physics.add.collider(nex, platform);
+		this.physics.add.collider(enemy, platform);
 
 
 		// Comandos
@@ -154,10 +172,21 @@ export default class Hospital extends Phaser.Scene {
 		this.a = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A)
 		this.s = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S)
 		this.d = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D)
-		this.c = this.input.keyboard.addKey(defaultConfig.attackKey)
-		this.v = this.input.keyboard.addKey(defaultConfig.especialKey)
+		this.c = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C)
+		this.v = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.V)
 		this.esc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC)
 
+		
+
+		/* Debug personagem */
+		let alex_2 = this.physics.add.sprite(500, 200, 'Alex-run-right').setScale(3, 3)
+		alex_2.setCollideWorldBounds(true);
+		alex_2.setBounce(0.2);
+		this.physics.add.collider(alex_2, platform)
+		/* Debug fim personagem */
+		
+		
+		
 		this.anims.create({
 			key: 'wardrobe',
 			frames: this.anims.generateFrameNames('living', { start: 8, end: 8 }),
@@ -185,7 +214,7 @@ export default class Hospital extends Phaser.Scene {
 			frameRate: 1,
 			repeat: 0
 		})
-		
+
 		this.anims.create({
 			key: 'heart-hurt',
 			frames: this.anims.generateFrameNames('hp', { start: 0, end: 1 }),
@@ -344,19 +373,19 @@ export default class Hospital extends Phaser.Scene {
 			repeat: -1
 		})
 
-		// enemy.anims.play("run-right", true)
+		enemy.anims.play("run-right", true)
 		// john.anims.play("john-run-right", true);
 
-		// enemy.setCollideWorldBounds(true)
+		enemy.setCollideWorldBounds(true)
 
-		// alex_2.anims.play("hurt", false)
+		alex_2.anims.play("hurt", false)
 
-		/*this.tweens.add({
+		this.tweens.add({
 			targets: enemy,
 			x: 750,
 			duration: 8100,
 			ease: 'Linear',
-		})*/
+		})
 
 		/*this.tweens.add({
 			targets: john,
@@ -366,7 +395,7 @@ export default class Hospital extends Phaser.Scene {
 		})*/
 
 		let isRight = true
-		/*
+
 		this.time.addEvent({
 			delay: 8100,
 			callback: () => {
@@ -389,7 +418,7 @@ export default class Hospital extends Phaser.Scene {
 						ease: 'Linear',
 					})*/
 
-				/*}else {
+				} else {
 
 					enemy.anims.play("run-right", true);
 					// john.anims.play("john-run-right", true)
@@ -407,60 +436,64 @@ export default class Hospital extends Phaser.Scene {
 						duration: 8100,
 						ease: 'Linear',
 					})*/
-			/*	}
+				}
 			},
 			callbackScope: this,
 			loop: true
 		});
-		*/
-		this.player = alex
-		// this.npc_john = john
 
+		this.player = alex
+		this.npc_john = john
 		this.box = box;
+		this.medicine = medicine;
 		this.platform = platform
 		this.hp = hearts;
-		alex.anims.play("idle-right", true)
+		this.bed = bed;
+		this.closet = closet;
+		this.wardrobe = wardrobe;
+		this.wall = walls;
 		wardrobe.anims.play("wardrobe", true)
 		closet.anims.play("closet", true)
 		bed.anims.play("bed", true)
 		medicine.anims.play("medicine", true)
-		// john.anims.play("john-idle-right", true)
-		// nex.anims.play("nex-idle-right", true)
-		let cursors = this.input.keyboard.createCursorKeys();
-		this.cursors = cursors;
+		alex.anims.play("idle-right", true)
+		john.anims.play("john-idle-right", true)
+		nex.anims.play("nex-idle-right", true)
 	}
 
 	update() {
+		if(this.esc.isDown)
+		{
+			if(this.scene.isActive())
+				this.scene.pause()
+		}
+
 		let alex = this.player;
 		let box = this.box;
 		let platform = this.platform;
 		let isLeft;
 
 		// Personagens
+		let cursors = this.input.keyboard.createCursorKeys();
 
 		this.physics.world.collide(box, platform);
 
+		if ((cursors.left.isDown || this.a.isDown) || (cursors.right.isDown || this.d.isDown)) {
+			alex.setVelocityX(cursors.left.isDown || this.a.isDown ? -200 : 200);
 
-		if (this.cursors.left.isDown || this.a.isDown) {
-			alex.setVelocityX(-200);
-			this.isLeft = true
-			alex.anims.play("left", true);
-			
-		}
-		else if(this.cursors.right.isDown || this.d.isDown) {
-			alex.setVelocityX(200);
-			this.isLeft = false
-			alex.anims.play("right", true);
+			this.isLeft = cursors.left.isDown || this.a.isDown ? true : false
+
+			alex.anims.play(cursors.left.isDown || this.a.isDown ? "left" : "right", true);
 		}
 		else {
-			alex.setVelocityX(0)
+			alex.setVelocityX(0);
 			if (this.isLeft != undefined) {
 				this.isLeft ? alex.anims.play("idle-left", true) : alex.anims.play("idle-right", true)
 			} else {
 				alex.anims.play("idle-right", true)
 			}
 		}
-		if (this.cursors.up.isDown && alex.body.touching.down) {
+		if (cursors.up.isDown && alex.body.touching.down) {
 			alex.setVelocityY(-250)
 		}
 		if (this.c.isDown) {
@@ -480,4 +513,31 @@ export default class Hospital extends Phaser.Scene {
 			}
 		}
 	}
+
+	render()
+	{
+	}
 }
+
+const config = {
+	type: Phaser.AUTO,
+	width: 1200,
+	height: 580,
+	pixelArt: true,
+	backgroundColor: 'background',
+	physics: {
+		default: 'arcade',
+		arcade: {
+			gravity: {
+				y: 300
+			},
+			debug: false
+		}
+	},
+	scene: [Hospital, Corredor]
+};
+
+const game = new Phaser.Game(config);
+
+export let gWidth = config.width 
+export let gHeight = config.height

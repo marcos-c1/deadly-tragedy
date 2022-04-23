@@ -18,26 +18,26 @@ class Menu extends Phaser.Scene
     preload()
     {
         this.load.audio('piano', '../assets/audio/background-sound.mp3')
-        this.load.image('bg', '../assets/sprites/Scenario/Background/background.png')
+        this.load.image('bg', '../assets/sprites/Scenario/Background/Forest/Background.png')
 
     }
     create()
     {
-		this.bg = this.add.tileSprite(0, 0, config.width, config.height, 'bg')
-            .setOrigin(0, 0);
+        this.bg = this.add.tileSprite(0, 0, config.width, config.height, 'bg')
+        .setOrigin(0, 0);
 
         
         // Menu
-        let title = this.add.text(config.width/2 - 350, 50, '', { fontSize: '64px', fontFamily: 'CustomFont', align: 'center', fill: '#2c2c2c'})
+        let title = this.add.text(config.width/2 - 350, 50, '', { fontSize: '64px', fontFamily: 'CustomFont', align: 'center', fill: '#ffff'})
         title.setText('Deadly Tragedy')
 
-        let copyRight = this.add.text(10, config.height - 35, '', {fontSize: '20px', fontFamily: 'CustomFont', align: 'left', fill: "#2c2c2c"})
+        let copyRight = this.add.text(10, config.height - 35, '', {fontSize: '20px', fontFamily: 'CustomFont', align: 'left', fill: "#ffff"})
 
-        let newGame = this.add.text(config.width/2 - 200, config.height/2 - 50, '', { fontSize: '50px', fontFamily: 'CustomFont', fill: '#2c2c2c', padding: {bottom: 10}});
+        let newGame = this.add.text(config.width/2 - 200, config.height/2 - 50, '', { fontSize: '50px', fontFamily: 'CustomFont', fill: '#ffff', padding: {bottom: 10}});
 
-        let options = this.add.text(config.width/2 - 200, config.height/2 + 10, '', { fontSize: '50px', fontFamily: 'CustomFont', fill: '#2c2c2c', padding: {top: 10}});
+        let options = this.add.text(config.width/2 - 200, config.height/2 + 10, '', { fontSize: '50px', fontFamily: 'CustomFont', fill: '#ffff', padding: {top: 10}});
         
-        let audio = this.add.text(config.width/2 - 200, config.height/2 + 80, '', { fontSize: '50px', fontFamily: 'CustomFont', fill: '#2c2c2c', padding: {top: 10}});
+        let audio = this.add.text(config.width/2 - 200, config.height/2 + 80, '', { fontSize: '50px', fontFamily: 'CustomFont', fill: '#ffff', padding: {top: 10}});
 
         newGame.setText(
             'Novo Jogo',
@@ -60,7 +60,7 @@ class Menu extends Phaser.Scene
             newGame.setFill('#ff6666')
         })
         newGame.on('pointerout', () => {
-            newGame.setFill('#2c2c2c')
+            newGame.setFill('#ffff')
         })
         
 
@@ -71,7 +71,7 @@ class Menu extends Phaser.Scene
             options.setFill('#ff6666')
         })
         options.on('pointerout', () => {
-            options.setFill('#2c2c2c')
+            options.setFill('#ffff')
         })
 
        audio.on('pointerdown', () => {
@@ -82,7 +82,7 @@ class Menu extends Phaser.Scene
             audio.setFill('#ff6666')
         })
         audio.on('pointerout', () => {
-            audio.setFill('#2c2c2c')  
+            audio.setFill('#ffff')  
         })
 
         
@@ -111,7 +111,7 @@ class Opcoes extends Phaser.Scene
     }
     preload()
     {
-        this.load.image('bg', '../assets/sprites/Scenario/Background/background.png')
+        this.load.image('bg', '../assets/sprites/Scenario/Background/Forest/Background.png')
     }
     create()
     {
@@ -121,10 +121,10 @@ class Opcoes extends Phaser.Scene
         this.bg = this.add.tileSprite(0, 0, config.width, config.height, 'bg')
             .setOrigin(0, 0);
 
-        let ataque = this.add.text(config.width/2 - 300, config.height/2 - 150, '' , {fontFamily: "CustomFont", fontSize: '40px', fill: '#2c2c2c'})
+        let ataque = this.add.text(config.width/2 - 300, config.height/2 - 150, '' , {fontFamily: "CustomFont", fontSize: '40px', fill: '#ffff'})
         ataque.setText('Tecla de Ataque: ');
 
-        let ataqueKey = this.add.text(config.width/2 + 270, config.height/2 - 150, '' , {fontFamily: "CustomFont", fontSize: '40px', fill: '#2c2c2c'})
+        let ataqueKey = this.add.text(config.width/2 + 270, config.height/2 - 150, '' , {fontFamily: "CustomFont", fontSize: '40px', fill: '#ffff'})
         ataqueKey.setText('C')
         ataqueKey.setInteractive({ useHandCursor: true })
 
@@ -136,17 +136,17 @@ class Opcoes extends Phaser.Scene
             this.input.keyboard.once('keydown', (e) => {
                 ataqueKey.setText(e.code.substring(3, e.code.length))
                 this.ataque_key = e.code.substring(3, e.code.length)
-                ataqueKey.setFill('#2c2c2c')
+                ataqueKey.setFill('#ffff')
                 return;
             }, this)
         })
 
         
-        let especial = this.add.text(config.width/2 - 300, config.height/2 - 60, '', { fontSize: '40px', fontFamily: 'CustomFont', fill: '#2c2c2c', padding: {top: 10}});
+        let especial = this.add.text(config.width/2 - 300, config.height/2 - 60, '', { fontSize: '40px', fontFamily: 'CustomFont', fill: '#ffff', padding: {top: 10}});
         especial.setText('Tecla de Especial: ')
         
         
-        let especialKey = this.add.text(config.width/2 + 300, config.height/2 - 60, '' , {fontFamily: "CustomFont", fontSize: '40px', fill: '#2c2c2c'})
+        let especialKey = this.add.text(config.width/2 + 300, config.height/2 - 60, '' , {fontFamily: "CustomFont", fontSize: '40px', fill: '#ffff'})
         especialKey.setText('V')
         especialKey.setInteractive({ useHandCursor: true })
         
@@ -158,17 +158,17 @@ class Opcoes extends Phaser.Scene
             this.input.keyboard.once('keydown', (e) => {
                 especialKey.setText(e.code.substring(3, e.code.length))
                 this.especial_key = e.code.substring(3, e.code.length)
-                especialKey.setFill('#2c2c2c')
+                especialKey.setFill('#ffff')
                 return;
             }, this)
         })
         
 
 
-        let copyRight = this.add.text(10, config.height - 35, '', {fontSize: '20px', fontFamily: 'CustomFont', align: 'left', fill: '#2c2c2c'})
+        let copyRight = this.add.text(10, config.height - 35, '', {fontSize: '20px', fontFamily: 'CustomFont', align: 'left', fill: '#ffff'})
         copyRight.setText('Copyright © All rights reserved')
 
-        let seta = this.add.text(10, 10, '', {fontFamily: 'CustomFont', color: '2c2c2c', fontSize: '60px'})
+        let seta = this.add.text(10, 10, '', {fontFamily: 'CustomFont', color: '#ffff', fontSize: '60px'})
 
         seta.setText('<')
         seta.setInteractive({ useHandCursor: true })
@@ -196,7 +196,7 @@ class Audio extends Phaser.Scene
     }
     preload()
     {
-        this.load.image('bg', '../assets/sprites/Scenario/Background/background.png')
+        this.load.image('bg', '../assets/sprites/Scenario/Background/Forest/Background.png')
     }
     create()
     {
@@ -205,19 +205,19 @@ class Audio extends Phaser.Scene
         this.bg = this.add.tileSprite(0, 0, config.width, config.height, 'bg')
             .setOrigin(0, 0);
 
-        let volume = this.add.text(config.width/2 - 200, config.height/2 - 50, '' , {fontFamily: "CustomFont", fontSize: '50px', fill: '#2c2c2c'})
+        let volume = this.add.text(config.width/2 - 200, config.height/2 - 50, '' , {fontFamily: "CustomFont", fontSize: '50px', fill: '#ffff'})
         volume.setText('Volume: ');
         this.data.set('volume', this.sound.volume*10)
 
-        let minus = this.add.text(config.width/2 + 60, config.height/2 - 50, '' , {fontFamily: "CustomFont", fontSize: '50px', fill: '#2c2c2c'})
+        let minus = this.add.text(config.width/2 + 60, config.height/2 - 50, '' , {fontFamily: "CustomFont", fontSize: '50px', fill: '#ffff'})
         minus.setText(' - ');
         minus.setInteractive({ useHandCursor: true });
         
-        let soundItself = this.add.text(config.width/2 + 170, config.height/2 - 50, '', {fontFamily: "CustomFont", fontSize: '50px', fill: '#2c2c2c'})
+        let soundItself = this.add.text(config.width/2 + 170, config.height/2 - 50, '', {fontFamily: "CustomFont", fontSize: '50px', fill: '#ffff'})
 
         this.volume = soundItself
         
-        let plus = this.add.text(config.width/2 + 240, config.height/2 - 50, '' , {fontFamily: "CustomFont", fontSize: '50px', fill: '#2c2c2c'})
+        let plus = this.add.text(config.width/2 + 240, config.height/2 - 50, '' , {fontFamily: "CustomFont", fontSize: '50px', fill: '#ffff'})
         plus.setText(' + ');
         plus.setInteractive({ useHandCursor: true });
 
@@ -235,7 +235,7 @@ class Audio extends Phaser.Scene
             }
         })
 
-        let mute = this.add.text(config.width/2 - 200, config.height/2 + 10, '', { fontSize: '50px', fontFamily: 'CustomFont', fill: '#2c2c2c', padding: {top: 10}});
+        let mute = this.add.text(config.width/2 - 200, config.height/2 + 10, '', { fontSize: '50px', fontFamily: 'CustomFont', fill: '#ffff', padding: {top: 10}});
         mute.setText('Mute')
         mute.setInteractive({ useHandCursor: true });
 
@@ -244,10 +244,10 @@ class Audio extends Phaser.Scene
             this.sound.setMute(!mute);
         })
 
-        let copyRight = this.add.text(10, config.height - 35, '', {fontSize: '20px', fontFamily: 'CustomFont', align: 'left', fill: '#2c2c2c'})
+        let copyRight = this.add.text(10, config.height - 35, '', {fontSize: '20px', fontFamily: 'CustomFont', align: 'left', fill: '#ffff'})
         copyRight.setText('Copyright © All rights reserved')
 
-        let seta = this.add.text(10, 10, '', {fontFamily: 'CustomFont', color: '2c2c2c', fontSize: '60px'})
+        let seta = this.add.text(10, 10, '', {fontFamily: 'CustomFont', color: '#ffff', fontSize: '60px'})
 
         seta.setText('<')
         seta.setInteractive({ useHandCursor: true })
@@ -286,6 +286,16 @@ class Loading extends Phaser.Scene
         progressBox.fillStyle(0x222222, 0.8);
         progressBox.fillRect(config.width/2 - 150, config.height / 2, 320, 50);
 
+
+        let title = this.make.text({
+            x: config.width/2 - 250, 
+            y: config.height / 2 - 250, 
+            text: 'Deadly Tragedy',
+            style: 
+            { fontSize: '45px', fontFamily: 'CustomFont', align: 'center', fill: '#ffff'}   
+        });
+
+
         let loadingText = this.make.text({
             x: config.width/2 - 140, 
             y: config.height / 2 - 50, 
@@ -294,27 +304,23 @@ class Loading extends Phaser.Scene
             { fontSize: '30px', fontFamily: 'CustomFont', align: 'center', fill: '#ffff'}   
         });
 
+
         this.load.on('progress', (value) => {
-            console.log(value)
             progressBar.clear();
             progressBar.fillStyle(0xff6666, 1);
             progressBar.fillRect(config.width/2 - 150 + 10, config.height / 2 + 10, 300*value, 30)
-        })
-
-        this.load.on('fileprogress', (file) => {
-            console.log(file.src)
         })
 
         this.load.on('complete', () => {
             progressBar.destroy();
             progressBox.destroy();
             loadingText.destroy();
+            title.destroy();
             this.scene.start('Hospital');
         })
     }
     create()
     {
-        let logo = this.add.image(600, 300, 'logo');
     }
     update()
     {
