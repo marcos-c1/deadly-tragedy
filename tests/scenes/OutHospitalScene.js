@@ -1,6 +1,5 @@
 import Person from './models/Person.js'
-import { gHeight, gWidth } from './GameLoadingScene.js'
-import { defaultConfig } from './GameLoadingScene.js'
+import { gHeight, gWidth } from './HospitalScene.js'
 
 export default class Corredor extends Phaser.Scene
 {
@@ -80,8 +79,8 @@ export default class Corredor extends Phaser.Scene
 		this.a = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A)
 		this.s = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S)
 		this.d = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D)
-		this.c = this.input.keyboard.addKey(defaultConfig.attackKey)
-		this.v = this.input.keyboard.addKey(defaultConfig.especialKey)
+		this.c = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C)
+		this.v = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.V)
 		this.esc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC)
 
 		
