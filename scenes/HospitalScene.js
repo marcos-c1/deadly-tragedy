@@ -1,6 +1,6 @@
 import Person from './models/Person.js'
 import {defaultConfig, gWidth, gHeight} from './GameLoadingScene.js'
-import Corredor from "./OutHospitalScene.js";
+import Corredor from "./Corredor.js";
 
 export default class Hospital extends Phaser.Scene {
 	constructor() {
@@ -135,8 +135,11 @@ export default class Hospital extends Phaser.Scene {
 		alex.body.onWorldBounds = true;
 		this.physics.world.once('worldbounds', (body, up, down, left, right) => {
 			if(left || right)
+			{
+				this.scene.stop("Hospital")
 				this.scene.launch("Corredor")
-		})
+			}
+		}, this)
 		// john.setCollideWorldBounds(true);
 		// nex.setCollideWorldBounds(true);
 		// enemy.setCollideWorldBounds(true);
