@@ -1,5 +1,7 @@
 import Hospital from "./HospitalScene.js";
-import Corredor from "./OutHospitalScene.js";
+import Corredor from "./Corredor.js";
+import Out from "./OutHospitalScene.js";
+import Bar from "./Bar.js";
 
 export let defaultConfig = 
 {
@@ -342,7 +344,7 @@ const config = {
 			debug: false
 		}
 	},
-	scene: [Menu, Opcoes, Audio, Loading, Hospital, Corredor]
+	scene: [Menu, Opcoes, Audio, Loading, Hospital, Corredor, Out, Bar]
 };
 
 const game = new Phaser.Game(config);

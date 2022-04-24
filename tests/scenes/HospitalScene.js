@@ -1,5 +1,7 @@
 import Person from './models/Person.js'
-import Corredor from './OutHospitalScene.js'
+import Corredor from './Corredor.js'
+import Out from './OutHospitalScene.js'
+import Bar from './Bar.js'
 
 export default class Hospital extends Phaser.Scene {
 	constructor() {
@@ -144,9 +146,8 @@ export default class Hospital extends Phaser.Scene {
 		alex.body.onWorldBounds = true;
 		this.physics.world.once('worldbounds', (body, up, down, left, right) => {
 			if(left || right){
-				// TODO: Fazer a verificação da cena para resete as chaves
-			}
 				this.scene.launch("Corredor")
+			}
 		})
 		
 		
@@ -534,7 +535,7 @@ const config = {
 			debug: false
 		}
 	},
-	scene: [Hospital, Corredor]
+	scene: [Hospital, Corredor, Out, Bar]
 };
 
 const game = new Phaser.Game(config);
