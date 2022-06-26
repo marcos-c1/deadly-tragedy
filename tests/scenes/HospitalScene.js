@@ -438,6 +438,8 @@ export default class Hospital extends Phaser.Scene {
 						ease: 'Linear',
 					});
 
+					
+
 					/*this.tweens.add({
 						targets: john,
 						x: 750,
@@ -453,19 +455,15 @@ export default class Hospital extends Phaser.Scene {
 		// Hitbox
 		this.physics.add.overlap(alex, enemy, () => {
 			if (this.c.isDown) {
-				enemy.anims.play("enemy-hurt", true)
-				this.tweens.add({
-					targets: enemy,
-					duration: 1200,
-					ease: 'Linear',
-				});
+				enemy.anims.play("enemy-hurt", false)
 			}
 	/*
 			estrela.destroy()
 			pegastar.play();
 			let score = textoPontos.getData('score');
 			textoPontos.setData('score', score + 10) 
-			textoPontos.setText('Score: ' + textoPontos.getData('score')) */
+			textoPontos.setText('Score: ' + textoPontos.getData('score')) 
+	*/
 		  }, null, this);
 
 		this.player = alex
