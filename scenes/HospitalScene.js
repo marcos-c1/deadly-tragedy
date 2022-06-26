@@ -1,7 +1,10 @@
 import Person from './models/Person.js'
 import {defaultConfig, gWidth, gHeight} from './GameLoadingScene.js'
 import Corredor from "./Corredor.js";
+<<<<<<< HEAD
 import Object from './models/Object.js'
+=======
+>>>>>>> 7734da0143b0cf4b5b706d6b652734e6e547ed75
 
 export default class Hospital extends Phaser.Scene {
 	constructor() {
@@ -10,10 +13,17 @@ export default class Hospital extends Phaser.Scene {
 
 	preload() {
 		let rpath = '../assets/sprites'
+<<<<<<< HEAD
 		let Alex = new Person(this, 0, 0, "Alex", false)
 		let John = new Person(this, 0, 0, "John", false)
 		let Nex = new Person(this, 0, 0, "Nex", false)
 		let Enemy = new Person(this, 0, 0, "SuperHuman", true)
+=======
+		let Alex = new Person("Alex", false)
+		let John = new Person("John", false)
+		let Nex = new Person("Nex", false)
+		let Enemy = new Person("SuperHuman", true)
+>>>>>>> 7734da0143b0cf4b5b706d6b652734e6e547ed75
 
 		Nex.animations.map((a) => {
 			this.load.spritesheet(a.name, a.path, a.frameDimensions)
@@ -112,6 +122,7 @@ export default class Hospital extends Phaser.Scene {
 
 		box.body.setVelocity(100, 200).setBounce(1, 1).setCollideWorldBounds(true);
 
+<<<<<<< HEAD
 		let plat = new Object(this, 3 + 30, gHeight + 11, 'ground');
 		
 		for (let i = 0, j = 30; i < 20; i++) {
@@ -122,12 +133,24 @@ export default class Hospital extends Phaser.Scene {
 		
 		for (let i = 0, j = 0; i < 5; i++) {
 			hearts.create(hp.x + j, hp.y, hp.texture.key).setScale(1, 1).refreshBody();
+=======
+		for (let i = 0, j = 30; i < 20; i++) {
+			platform.create(3 + j, gHeight + 11, 'ground').setScale(2, 2).refreshBody()
+			j += 60
+		}
+
+		for (let i = 0, j = 0; i < 5; i++) {
+			hearts.create(50 + j, 20, 'hp').setScale(1, 1).refreshBody();
+>>>>>>> 7734da0143b0cf4b5b706d6b652734e6e547ed75
 			j += 20
 		}
 
 		/* Personagens */
 		let alex = this.physics.add.sprite(100, 450, 'Alex-run-right').setScale(3, 3);
+<<<<<<< HEAD
 		
+=======
+>>>>>>> 7734da0143b0cf4b5b706d6b652734e6e547ed75
 		alex.depth = 2;
 		// let enemy = this.physics.add.sprite(50, 300, 'SuperHuman-run-right').setScale(3, 3);
 		// let john = this.physics.add.sprite(300, 450, 'John-run-right').setScale(3, 3);

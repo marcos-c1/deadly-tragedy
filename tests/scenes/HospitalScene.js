@@ -150,8 +150,7 @@ export default class Hospital extends Phaser.Scene {
 			}
 		})
 		
-		
-		
+	
 		let john = this.physics.add.sprite(300, 450, 'John-run-right').setScale(3, 3);
 		let nex = this.physics.add.sprite(700, 450, 'Nex-run-right').setScale(3, 3);
 		let enemy = this.physics.add.sprite(700, 300, 'SuperHuman-run-right').setScale(3, 3);
@@ -167,8 +166,6 @@ export default class Hospital extends Phaser.Scene {
 		this.physics.add.collider(john, platform);
 		this.physics.add.collider(nex, platform);
 		this.physics.add.collider(enemy, platform);
-
-		
 
 		// Comandos
 		this.w = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W)
@@ -296,7 +293,7 @@ export default class Hospital extends Phaser.Scene {
 			frameRate: 10,
 			repeat: -1
 		})
-		
+	
 		this.anims.create({
 			key: 'hurt',
 			frames: [{ key: 'Alex-hurt', frame: 1 }],
@@ -437,8 +434,6 @@ export default class Hospital extends Phaser.Scene {
 						duration: 8100,
 						ease: 'Linear',
 					});
-
-					
 
 					/*this.tweens.add({
 						targets: john,

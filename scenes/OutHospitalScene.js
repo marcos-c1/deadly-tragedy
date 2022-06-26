@@ -9,8 +9,13 @@ export default class Out extends Phaser.Scene {
     }
 
     preload() {
+<<<<<<< HEAD
     let Alex = new Person(this, 0, 0, "Alex", false)
 		let Enemy = new Person(this, 0, 0, "SuperHuman", true)
+=======
+        let Alex = new Person("Alex", false)
+		let Enemy = new Person("SuperHuman", true)
+>>>>>>> 7734da0143b0cf4b5b706d6b652734e6e547ed75
        
         Alex.animations.map((a) => {
 			this.load.spritesheet(a.name, a.path, a.frameDimensions)
@@ -84,6 +89,15 @@ export default class Out extends Phaser.Scene {
 		
 
 		alex.body.onWorldBounds = true;
+<<<<<<< HEAD
+=======
+		this.physics.world.once('worldbounds', (body, up, down, left, right) => {
+			if(left || right)
+            {
+                this.scene.launch("")
+            }
+		})
+>>>>>>> 7734da0143b0cf4b5b706d6b652734e6e547ed75
         
 		this.physics.add.collider(alex, platform);
 

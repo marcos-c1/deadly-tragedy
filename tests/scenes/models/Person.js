@@ -22,11 +22,14 @@ export default class Person extends Phaser.Scene {
 					name: `${name}-idle`,
 					path: `${rpath}/Enemies/${name}/${name}_idle.png`,
 					frameDimensions: { frameWidth: 48, frameHeight: 48 }
+<<<<<<< HEAD
 				},
 				{
 					name: `${name}-hurt`,
 					path: `${rpath}/Enemies/${name}/${name}_hurt.png`,
 					frameDimensions: { frameWidth: 48, frameHeight: 48 }
+=======
+>>>>>>> 7734da0143b0cf4b5b706d6b652734e6e547ed75
 				}
 			] :
 			this.animations =

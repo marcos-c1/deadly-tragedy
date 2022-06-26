@@ -22,6 +22,7 @@ export default class Person extends Phaser.Physics.Arcade.Sprite{
 				{
 					name: `${this.personName}-idle`,
 					path: `${rpath}/Enemies/${this.personName}/${this.personName}_idle.png`,
+
 					frameDimensions: { frameWidth: 48, frameHeight: 48 }
 				}
 			] :

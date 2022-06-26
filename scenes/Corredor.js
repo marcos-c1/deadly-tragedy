@@ -3,6 +3,7 @@ import { gHeight, gWidth } from './GameLoadingScene.js'
 import { defaultConfig } from './GameLoadingScene.js'
 import Out from './OutHospitalScene.js';
 import Object from './models/Object.js'
+
 export default class Corredor extends Phaser.Scene
 {
 
@@ -15,7 +16,6 @@ export default class Corredor extends Phaser.Scene
     {
 		let Alex = new Person(this, 0, 0, "Alex", false)
 		let Enemy = new Person(this, 0, 0, "SuperHuman", true)
-       
         Alex.animations.map((a) => {
 			this.load.spritesheet(a.name, a.path, a.frameDimensions)
 		})
