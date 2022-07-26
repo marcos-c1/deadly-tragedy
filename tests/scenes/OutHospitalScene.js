@@ -1,5 +1,5 @@
-import Person from "./models/Person.js"
-import { gHeight, gWidth } from "./HospitalScene.js"
+import Player from "./models/Player.js"
+import { screenHeight, screenWidth } from "./HospitalScene.js"
 import Bar from "./Bar.js"
 
 export default class Out extends Phaser.Scene {
@@ -87,7 +87,8 @@ export default class Out extends Phaser.Scene {
 		this.physics.world.once('worldbounds', (body, up, down, left, right) => {
 			if(left || right)
             {
-                this.scene.launch("")
+				this.scene.stop("Out")
+                this.scene.launch("Bar")
             }
 		})
         

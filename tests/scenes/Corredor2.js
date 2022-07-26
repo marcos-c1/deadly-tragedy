@@ -1,17 +1,27 @@
-import Person from './models/Player.js'
+import Player from './models/Player.js'
 import { screenHeight, screenWidth } from './HospitalScene.js'
+import Out from './OutHospitalScene.js';
 
-export default class Corredor extends Phaser.Scene
+export default class Corredor2 extends Phaser.Scene
 {
 
     constructor()
     {
-        super({ key: 'Corredor'})
+        super({ key: 'Corredor2'})
     }
 
     preload()
     {
-		
+		let Alex = new Person("Alex", false)
+		let Enemy = new Person("SuperHuman", true)
+       
+        Alex.animations.map((a) => {
+			this.load.spritesheet(a.name, a.path, a.frameDimensions)
+		})
+		Enemy.animations.map((a) => {
+			this.load.spritesheet(a.name, a.path, a.frameDimensions)
+		})
+
         this.load.spritesheet('hp', '../assets/sprites/Health-Bar/heart_animated_1.png',
 			{ frameWidth: 18, frameHeight: 16 })
 
@@ -70,28 +80,30 @@ export default class Corredor extends Phaser.Scene
 		this.a = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A)
 		this.s = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S)
 		this.d = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D)
-		this.c = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C)
-		this.v = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.V)
+		this.c = this.input.keyboard.addKey(Phaser.Input.Keyboard.C)
+		this.v = this.input.keyboard.addKey(Phaser.Input.Keyboard.V)
 		this.esc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC)
 
-		
 		alex.depth = 2;
         enemy.depth = 2;
 
         enemy.body.collideWorldBounds = true;
+		
 		alex.body.collideWorldBounds = true;
         alex.enableBody = true;
 		alex.physicsBodyType = Phaser.Physics.ARCADE;
 		
 
 		alex.body.onWorldBounds = true;
+		
+
 		this.physics.world.once('worldbounds', (body, up, down, left, right) => {
 			if(left || right)
-            {
+			{
 				this.scene.stop("Corredor")
-                this.scene.launch("Corredor2")
-            }
-		})
+				this.scene.launch("Out")
+			}
+		}, this)
         
 		this.physics.add.collider(alex, platform);
         this.physics.add.collider(enemy, platform);

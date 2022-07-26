@@ -1,4 +1,5 @@
-import Person from "./models/Person.js"
+import Player from "./models/Player.js"
+
 import { defaultConfig, gHeight, gWidth } from "./GameLoadingScene.js"
 import Bar from "./Bar.js"
 
@@ -8,47 +9,35 @@ export default class Out extends Phaser.Scene {
         super({ key: 'Out' })
     }
 
+	init(data) {
+		this.playerHP = data.playerHP.value
+	}
+
     preload() {
-<<<<<<< HEAD
-    let Alex = new Person(this, 0, 0, "Alex", false)
-		let Enemy = new Person(this, 0, 0, "SuperHuman", true)
-=======
-        let Alex = new Person("Alex", false)
-		let Enemy = new Person("SuperHuman", true)
->>>>>>> 7734da0143b0cf4b5b706d6b652734e6e547ed75
-       
-        Alex.animations.map((a) => {
-			this.load.spritesheet(a.name, a.path, a.frameDimensions)
-		})
-		Enemy.animations.map((a) => {
-			this.load.spritesheet(a.name, a.path, a.frameDimensions)
-		})
-
 		this.load.image('plat', '../assets/sprites/Scenario/Tiles/IndustrialTile_75.png')
-
 		this.load.image('flag', '../assets/sprites/Scenario/Objects/Flag.png')
-
 		this.load.image('barrel_2', '../assets/sprites/Scenario/Objects/Barrel2.png')
-
 		this.load.image('barrel_1', '../assets/sprites/Scenario/Objects/Barrel1.png')
-
 		this.load.image('sign', '../assets/sprites/Scenario/Objects/Pointer1.png')
-
 		this.load.image('crate', '../assets/sprites/Scenario/Objects/Box8.png')
-
 		this.load.image('bar', '../assets/sprites/Scenario/Bodies/13.png')
-
-
-        this.load.spritesheet('hp', '../assets/sprites/Health-Bar/heart_animated_1.png',
-			{ frameWidth: 18, frameHeight: 16 })
-    
         this.load.image('bkg', '../assets/sprites/Scenario/Background/Background.png');
     }
 
     create() {
+
+		// Comandos
+		this.cursors = this.input.keyboard.createCursorKeys()
+		this.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W)
+		this.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A)
+		this.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S)
+		this.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D)
+		this.keyC = this.input.keyboard.addKey(defaultConfig.attackKey)
+		this.keyV = this.input.keyboard.addKey(defaultConfig.especialKey)
+		this.ESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC)
+
 		let platform = this.physics.add.staticGroup();
 		let outObj = this.physics.add.staticGroup();
-        let hearts = this.physics.add.staticGroup();
 		let barName = this.add.text(gWidth - 400, gHeight - 180, '', {fontFamily: 'CustomFont', fontSize: '30px', color: '#f65900'});
 		barName.setText('Prospects Bar')
 
@@ -80,189 +69,122 @@ export default class Out extends Phaser.Scene {
 			j += 60
 		}
 
-        let alex = this.physics.add.sprite(100, gHeight - 90, 'Alex-run-right').setScale(3, 3);
-
-		alex.body.collideWorldBounds = true;
-		alex.depth = 2;
-        alex.enableBody = true;
-		alex.physicsBodyType = Phaser.Physics.ARCADE;
+        /* Personagens */
+		this.player = this.physics.add.existing(new Player(this, 100, gHeight - 110, 'alex', this.playerHP)).setScale(3, 3)
+		this.player.depth = 2;
+		this.player.enableBody = true;		
+		this.physics.world.enableBody(this.player)
+		this.player.body.collideWorldBounds = true;
+		this.player.body.onWorldBounds = true;
+		this.player.setCollideWorldBounds(true);
 		
+		this.physics.add.collider(this.player, platform);
 
-		alex.body.onWorldBounds = true;
-<<<<<<< HEAD
-=======
-		this.physics.world.once('worldbounds', (body, up, down, left, right) => {
-			if(left || right)
-            {
-                this.scene.launch("")
-            }
-		})
->>>>>>> 7734da0143b0cf4b5b706d6b652734e6e547ed75
-        
-		this.physics.add.collider(alex, platform);
-
-        this.bg = this.add.tileSprite(0, 0, gWidth, gHeight, 'bkg')
+		this.bg = this.add.tileSprite(0, 0, gWidth, gHeight, 'bkg')
         .setOrigin(0, 0).setScale(2, 1.76);
 		this.bg.depth = -1
 
-        // Comandos
-        this.w = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W)
-        this.a = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A)
-        this.s = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S)
-        this.d = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D)
-        this.c = this.input.keyboard.addKey(defaultConfig.attackKey)
-        this.v = this.input.keyboard.addKey(defaultConfig.especialKey)
-        this.esc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC)
-
-        for (let i = 0, j = 0; i < 5; i++) {
-			hearts.create(50 + j, 20, 'hp').setScale(1, 1).refreshBody();
-			j += 20
-		}
-
-        this.anims.create({
-			key: 'heart-hurt',
-			frames: this.anims.generateFrameNames('hp', { start: 0, end: 1 }),
-			frameRate: 4,
-			repeat: 0
-		})
-
-        this.anims.create({
-			key: 'run-right',
-			frames: this.anims.generateFrameNumbers('SuperHuman-run-right',
-				{ start: 0, end: 5 }),
-			frameRate: 6,
-			yoyo: false,
-			repeat: 7,
-		});
-
 		this.anims.create({
-			key: 'run-left',
-			frames: this.anims.generateFrameNumbers('SuperHuman-run-left',
-				{ start: 0, end: 5 }),
-			frameRate: 6,
-			yoyo: false,
-			repeat: 6
-		});
-
+			key: 'left',
+			frames: this.anims.generateFrameNumbers('alex', { frames: [0, 1, 2, 3, 4, 5] }),
+			frameRate: 8,
+			repeat: 1
+		})
 
 		this.anims.create({
 			key: 'right',
-			frames: this.anims.generateFrameNames('Alex-run-right',
-				{ start: 0, end: 5 }),
-			frameRate: 10,
-			repeat: -1
+			frames: this.anims.generateFrameNumbers('alex', { frames: [0, 1, 2, 3, 4, 5] }),
+			frameRate: 8,
+			repeat: 1
 		})
 
 		this.anims.create({
-			key: 'left',
-			frames: this.anims.generateFrameNames('Alex-run-left',
-				{ start: 5, end: 0 }),
-			frameRate: 10,
-			repeat: -1
+			key: 'punch',
+			frames: this.anims.generateFrameNumbers('alex', { frames: [60, 61, 62, 63, 64] }),
+			frameRate: 8,
+			repeat: 0
 		})
 
 		this.anims.create({
-			key: 'idle-right',
-			frames: this.anims.generateFrameNames('Alex-idle-right',
-				{ start: 0, end: 0 }),
-			frameRate: 1,
-			repeat: -1
-		})
-
-		this.anims.create({
-			key: 'idle-left',
-			frames: this.anims.generateFrameNames('Alex-idle-left',
-				{ start: 0, end: 0 }),
-			frameRate: 1,
-			repeat: -1
-		})
-
-        this.anims.create({
 			key: 'hurt',
-			frames: [{ key: 'Alex-hurt', frame: 1 }],
-			frameRate: 10,
+			frames: this.anims.generateFrameNumbers('alex', { frames: [7] }),
+			frameRate: 8,
+			repeat: 1
 		})
 
 		this.anims.create({
-			key: 'attack-right',
-			frames: [{ key: 'Alex-attack1-right', frame: 4 }],
-			frameRate: 10,
-		})
-
-		this.anims.create({
-			key: 'attack-left',
-			frames: [{ key: 'Alex-attack1-left', frame: 1 }],
-			frameRate: 10,
-		})
-
-		this.anims.create({
-			key: 'special-right',
-			frames: this.anims.generateFrameNames('Alex-special-right',
-				{ end: 7 }),
-			frameRate: 10,
+			key: 'die',
+			frames: this.anims.generateFrameNumbers('alex', { frames: [20, 21, 22, 23, 24] }),
+			frameRate: 8,
 			repeat: -1
 		})
 
 		this.anims.create({
-			key: 'special-left',
-			frames: this.anims.generateFrameNames('Alex-special-left',
-				{ start: 7, end: 0 }),
-			frameRate: 10,
-			repeat: -1
+			key: 'jump',
+			frames: this.anims.generateFrameNumbers('alex', { frames: [40, 41, 42, 43, 44] }),
+			frameRate: 8,
+			repeat: 0
 		})
 
-        this.player = alex
-		alex.anims.play("idle-right", true)
-        let cursors = this.input.keyboard.createCursorKeys();
-        this.cursors = cursors;
+		this.anims.create({
+			key: 'idle',
+			frames: this.anims.generateFrameNumbers('alex', { frames: [6] }),
+			frameRate: 1,
+			repeat: 0
+		})
+
+		this.anims.create({
+			key: 'enemy-left',
+			frames: this.anims.generateFrameNumbers('enemy', { frames: [5, 4, 3, 2, 1] }),
+			frameRate: 5,
+			repeat: 1
+		})
+
+		this.anims.create({
+			key: 'enemy-right',
+			frames: this.anims.generateFrameNumbers('enemy', { frames: [5, 4, 3, 2, 1] }),
+			frameRate: 5,
+			repeat: 1
+		})
+
+		this.anims.create({
+			key: 'enemy-hit',
+			frames: this.anims.generateFrameNumbers('enemy', { frames: [12, 13] }),
+			frameRate: 5,
+			repeat: 1
+		})
+
+		this.anims.create({
+			key: 'enemy-death',
+			frames: this.anims.generateFrameNumbers('enemy', { frames: [7, 8, 9, 10, 11] }),
+			frameRate: 5,
+			repeat: 1
+		})
+
+		this.anims.create({
+			key: 'enemy-idle',
+			frames: this.anims.generateFrameNumbers('enemy', { frames: [0] }),
+			frameRate: 1,
+			repeat: 0
+		})
     }
 
     update() {
-        let alex = this.player;
 
-		if(alex.x >= 900)
+		if (!this.player.alive) {
+			this.player.anims.play('die')
+			this.player.setTint(0xff0000)
+			this.physics.pause()
+			this.gameOver.show()
+		}
+		if(this.keyV.isDown){
+			this.player.anims.play('die')
+		}
+
+		if(this.player.x >= 900)
 		{
 			this.scene.stop("Out");
-			this.scene.launch("Bar");
-		} 
-		
-        if (this.cursors.left.isDown || this.a.isDown) {
-			alex.setVelocityX(-200);
-			this.isLeft = true
-			alex.anims.play("left", true);
-			
-		}
-		else if(this.cursors.right.isDown || this.d.isDown) {
-			alex.setVelocityX(200);
-			this.isLeft = false
-			alex.anims.play("right", true);
-		}
-		else {
-			alex.setVelocityX(0)
-			if (this.isLeft != undefined) {
-				this.isLeft ? alex.anims.play("idle-left", true) : alex.anims.play("idle-right", true)
-			} else {
-				alex.anims.play("idle-right", true)
-			}
-		}
-		if (this.cursors.up.isDown && alex.body.touching.down) {
-			alex.setVelocityY(-250)
-		}
-		if (this.c.isDown) {
-			if (this.isLeft != undefined) {
-				this.isLeft ? alex.anims.play("attack-left", true) : alex.anims.play("attack-right", true)
-			} else {
-				alex.anims.play("attack-right", true)
-			}
-
-		}
-
-		if (this.v.isDown) {
-			if (this.isLeft != undefined) {
-				this.isLeft ? alex.anims.play("special-left", true) : alex.anims.play("special-right", true)
-			} else {
-				alex.anims.play("special-right", true)
-			}
-		}
+			this.scene.launch("Bar", {playerHP: this.player.hp});
+		} 	
     }
 }
