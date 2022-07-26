@@ -4,6 +4,7 @@ import TextSpan from './models/TextSpan.js';
 
 import {defaultConfig, gWidth, gHeight} from './GameLoadingScene.js'
 import Corredor from "./Corredor.js";
+import Object from './models/Object.js'
 
 export default class Hospital extends Phaser.Scene {
 	static player
@@ -14,6 +15,7 @@ export default class Hospital extends Phaser.Scene {
 	}
 
 	preload() {
+
 		this.load.image('ground', '../assets/sprites/Scenario/Tiles/IndustrialTile_78.png')
 		
 		this.load.spritesheet('alex', `../assets/sprites/Alex/Alex.png`, { frameWidth: 47, frameHeight: 49 })
@@ -97,13 +99,13 @@ export default class Hospital extends Phaser.Scene {
 
 		box.body.setVelocity(100, 200).setBounce(1, 1).setCollideWorldBounds(true);
 
+
 		for (let i = 0, j = 30; i < 20; i++) {
 			platform.create(3 + j, gHeight + 11, 'ground').setScale(2, 2).refreshBody()
 			j += 60
 		}
 
 		this.gameOver = new TextSpan(this, gWidth/2 - 200, gHeight/2 - 50, 'Game Over', { fontSize: '50px', fontFamily: 'CustomFont', fill: '#ffff', padding: {bottom: 10}});
-
 		
 		/* Personagens */
 		this.player = this.physics.add.existing(new Player(this, 100, 450, 'alex')).setScale(3, 3)

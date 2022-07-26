@@ -14,7 +14,6 @@ export default class Out extends Phaser.Scene {
 	}
 
     preload() {
-       
 		this.load.image('plat', '../assets/sprites/Scenario/Tiles/IndustrialTile_75.png')
 		this.load.image('flag', '../assets/sprites/Scenario/Objects/Flag.png')
 		this.load.image('barrel_2', '../assets/sprites/Scenario/Objects/Barrel2.png')
@@ -78,12 +77,6 @@ export default class Out extends Phaser.Scene {
 		this.player.body.collideWorldBounds = true;
 		this.player.body.onWorldBounds = true;
 		this.player.setCollideWorldBounds(true);
-
-		this.physics.add.collider(this.player, platform);
-
-        this.bg = this.add.tileSprite(0, 0, gWidth, gHeight, 'bkg')
-        .setOrigin(0, 0).setScale(2, 1.76);
-		this.bg.depth = -1
 
 
 		this.anims.create({

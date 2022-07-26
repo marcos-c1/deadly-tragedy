@@ -4,6 +4,7 @@ import Enemy from './models/Enemy.js'
 import { gHeight, gWidth } from './GameLoadingScene.js'
 import { defaultConfig } from './GameLoadingScene.js'
 import Out from './OutHospitalScene.js';
+import Object from './models/Object.js'
 
 export default class Corredor extends Phaser.Scene
 {

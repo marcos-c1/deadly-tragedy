@@ -117,8 +117,6 @@ export default class Hospital extends Phaser.Scene {
 			}
 		})
 
-
-
 		alex.setCollideWorldBounds(true);
 		enemy.setCollideWorldBounds(true);
 
@@ -128,7 +126,6 @@ export default class Hospital extends Phaser.Scene {
 
 		this.physics.world.enableBody(alex)
 		this.physics.world.enableBody(enemy)
-
 
 
 		// Comandos
@@ -257,6 +254,20 @@ export default class Hospital extends Phaser.Scene {
 		enemy.walk()
 
 
+		// Hitbox
+		this.physics.add.overlap(alex, enemy, () => {
+			if (this.c.isDown) {
+				enemy.anims.play("enemy-hurt", false)
+			}
+	/*
+			estrela.destroy()
+			pegastar.play();
+			let score = textoPontos.getData('score');
+			textoPontos.setData('score', score + 10) 
+			textoPontos.setText('Score: ' + textoPontos.getData('score')) 
+	*/
+		  }, null, this);
+
 		this.player = alex
 		this.enemy = enemy
 		this.medicine = medicine;
@@ -332,7 +343,7 @@ const config = {
 			gravity: {
 				y: 300
 			},
-			debug: false
+			debug: true
 		}
 	},
 	scene: [Hospital, Corredor, Corredor2, Out, Bar]

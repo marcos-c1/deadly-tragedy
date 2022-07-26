@@ -1,7 +1,8 @@
-export default class Person extends Phaser.Scene {
-	constructor(name = String, isEnemy = Boolean) {
-		super();
+export default class Person extends Phaser.Physics.Arcade.Sprite{
+	constructor(scene, x = 0, y = 0, name,  isEnemy = Boolean) {
+		super(scene, x, y);
 
+		this.setPosition(x, y);
 		this.personName = name
 		this.isEnemy = isEnemy
 
@@ -9,76 +10,77 @@ export default class Person extends Phaser.Scene {
 		this.isEnemy ? this.animations =
 			[
 				{
-					name: `${name}-run-right`,
-					path: `${rpath}/Enemies/${name}/${name}_run_right.png`,
+					name: `${this.personName}-run-right`,
+					path: `${rpath}/Enemies/${this.personName}/${this.personName}_run_right.png`,
 					frameDimensions: { frameWidth: 48, frameHeight: 48 }
 				},
 				{
-					name: `${name}-run-left`,
-					path: `${rpath}/Enemies/${name}/${name}_run_left.png`,
+					name: `${this.personName}-run-left`,
+					path: `${rpath}/Enemies/${this.personName}/${this.personName}_run_left.png`,
 					frameDimensions: { frameWidth: 48, frameHeight: 48 }
 				},
 				{
-					name: `${name}-idle`,
-					path: `${rpath}/Enemies/${name}/${name}_idle.png`,
+					name: `${this.personName}-idle`,
+					path: `${rpath}/Enemies/${this.personName}/${this.personName}_idle.png`,
+
 					frameDimensions: { frameWidth: 48, frameHeight: 48 }
 				}
 			] :
 			this.animations =
 			[
 				{
-					name: `${name}-run-right`,
-					path: `${rpath}/${name}/${name}_run_right.png`,
+					name: `${this.personName}-run-right`,
+					path: `${rpath}/${this.personName}/${this.personName}_run_right.png`,
 					frameDimensions: { frameWidth: 48, frameHeight: 48 }
 				},
 				{
-					name: `${name}-run-left`,
-					path: `${rpath}/${name}/${name}_run_left.png`,
+					name: `${this.personName}-run-left`,
+					path: `${rpath}/${this.personName}/${this.personName}_run_left.png`,
 					frameDimensions: { frameWidth: 48, frameHeight: 48 }
 				},
 				{
-					name: `${name}-idle-right`,
-					path: `${rpath}/${name}/${name}_idle_right.png`,
+					name: `${this.personName}-idle-right`,
+					path: `${rpath}/${this.personName}/${this.personName}_idle_right.png`,
 					frameDimensions: { frameWidth: 48, frameHeight: 48 }
 				},
 				{
-					name: `${name}-idle-left`,
-					path: `${rpath}/${name}/${name}_idle_left.png`,
+					name: `${this.personName}-idle-left`,
+					path: `${rpath}/${this.personName}/${this.personName}_idle_left.png`,
 					frameDimensions: { frameWidth: 48, frameHeight: 48 }
 				},
 				{
-					name: `${name}-jump-right`,
-					path: `${rpath}/${name}/${name}_jump_right.png`,
+					name: `${this.personName}-jump-right`,
+					path: `${rpath}/${this.personName}/${this.personName}_jump_right.png`,
 					frameDimensions: { frameWidth: 48, frameHeight: 48 }
 				},
 				{
-					name: `${name}-jump-left`,
-					path: `${rpath}/${name}/${name}_jump_left.png`,
+					name: `${this.personName}-jump-left`,
+					path: `${rpath}/${this.personName}/${this.personName}_jump_left.png`,
 					frameDimensions: { frameWidth: 48, frameHeight: 48 }
 				},
 				{
-					name: `${name}-hurt`,
-					path: `${rpath}/${name}/${name}_hurt.png`,
+					name: `${this.personName}-hurt`,
+					path: `${rpath}/${this.personName}/${this.personName}_hurt.png`,
 					frameDimensions: { frameWidth: 48, frameHeight: 48 }
 				},
 				{
-					name: `${name}-attack1-right`,
-					path: `${rpath}/${name}/${name}_attack1_right.png`,
+					name: `${this.personName}-attack1-right`,
+					path: `${rpath}/${this.personName}/${this.personName}_attack1_right.png`,
 					frameDimensions: { frameWidth: 48, frameHeight: 48 }
 				},
 				{
-					name: `${name}-attack1-left`,
-					path: `${rpath}/${name}/${name}_attack1_left.png`,
+					name: `${this.personName}-attack1-left`,
+					path: `${rpath}/${this.personName}/${this.personName}_attack1_left.png`,
 					frameDimensions: { frameWidth: 48, frameHeight: 48 }
 				},
 				{
-					name: `${name}-special-right`,
-					path: `${rpath}/${name}/${name}_special_right.png`,
+					name: `${this.personName}-special-right`,
+					path: `${rpath}/${this.personName}/${this.personName}_special_right.png`,
 					frameDimensions: { frameWidth: 48, frameHeight: 48 }
 				},
 				{
-					name: `${name}-special-left`,
-					path: `${rpath}/${name}/${name}_special_left.png`,
+					name: `${this.personName}-special-left`,
+					path: `${rpath}/${this.personName}/${this.personName}_special_left.png`,
 					frameDimensions: { frameWidth: 48, frameHeight: 48 }
 				},
 			]
