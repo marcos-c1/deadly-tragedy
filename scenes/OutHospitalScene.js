@@ -1,5 +1,5 @@
 import Person from "./models/Person.js"
-import { gHeight, gWidth } from "./HospitalScene.js"
+import { defaultConfig, gHeight, gWidth } from "./GameLoadingScene.js"
 import Bar from "./Bar.js"
 
 export default class Out extends Phaser.Scene {
@@ -9,8 +9,13 @@ export default class Out extends Phaser.Scene {
     }
 
     preload() {
+<<<<<<< HEAD
+    let Alex = new Person(this, 0, 0, "Alex", false)
+		let Enemy = new Person(this, 0, 0, "SuperHuman", true)
+=======
         let Alex = new Person("Alex", false)
 		let Enemy = new Person("SuperHuman", true)
+>>>>>>> 7734da0143b0cf4b5b706d6b652734e6e547ed75
        
         Alex.animations.map((a) => {
 			this.load.spritesheet(a.name, a.path, a.frameDimensions)
@@ -84,12 +89,15 @@ export default class Out extends Phaser.Scene {
 		
 
 		alex.body.onWorldBounds = true;
+<<<<<<< HEAD
+=======
 		this.physics.world.once('worldbounds', (body, up, down, left, right) => {
 			if(left || right)
             {
                 this.scene.launch("")
             }
 		})
+>>>>>>> 7734da0143b0cf4b5b706d6b652734e6e547ed75
         
 		this.physics.add.collider(alex, platform);
 
@@ -102,8 +110,8 @@ export default class Out extends Phaser.Scene {
         this.a = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A)
         this.s = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S)
         this.d = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D)
-        this.c = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C)
-        this.v = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.V)
+        this.c = this.input.keyboard.addKey(defaultConfig.attackKey)
+        this.v = this.input.keyboard.addKey(defaultConfig.especialKey)
         this.esc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC)
 
         for (let i = 0, j = 0; i < 5; i++) {

@@ -1,5 +1,8 @@
 import Person from './models/Person.js'
-import { gHeight, gWidth } from './HospitalScene.js'
+import { gHeight, gWidth } from './GameLoadingScene.js'
+import { defaultConfig } from './GameLoadingScene.js'
+import Out from './OutHospitalScene.js';
+import Object from './models/Object.js'
 
 export default class Corredor extends Phaser.Scene
 {
@@ -11,9 +14,8 @@ export default class Corredor extends Phaser.Scene
 
     preload()
     {
-		let Alex = new Person("Alex", false)
-		let Enemy = new Person("SuperHuman", true)
-       
+		let Alex = new Person(this, 0, 0, "Alex", false)
+		let Enemy = new Person(this, 0, 0, "SuperHuman", true)
         Alex.animations.map((a) => {
 			this.load.spritesheet(a.name, a.path, a.frameDimensions)
 		})
@@ -79,27 +81,30 @@ export default class Corredor extends Phaser.Scene
 		this.a = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A)
 		this.s = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S)
 		this.d = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D)
-		this.c = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C)
-		this.v = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.V)
+		this.c = this.input.keyboard.addKey(defaultConfig.attackKey)
+		this.v = this.input.keyboard.addKey(defaultConfig.especialKey)
 		this.esc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC)
 
-		
 		alex.depth = 2;
         enemy.depth = 2;
 
         enemy.body.collideWorldBounds = true;
+		
 		alex.body.collideWorldBounds = true;
         alex.enableBody = true;
 		alex.physicsBodyType = Phaser.Physics.ARCADE;
 		
 
 		alex.body.onWorldBounds = true;
+		
+
 		this.physics.world.once('worldbounds', (body, up, down, left, right) => {
 			if(left || right)
-            {
-                this.scene.launch("Out")
-            }
-		})
+			{
+				this.scene.stop("Corredor")
+				this.scene.launch("Out")
+			}
+		}, this)
         
 		this.physics.add.collider(alex, platform);
         this.physics.add.collider(enemy, platform);
